@@ -6,23 +6,31 @@
 /*   By: thperchi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/11 12:44:08 by thperchi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/02/18 14:53:30 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/04 11:30:25 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
+void		error(void)
+{
+	printf(red"error"reset);
+	exit(1);
+}
+
 t_fillit	*stock(int fd, t_fillit *list)
 {
-	int y;
-	int z;
-	char c;
-	t_fillit *tmp;
+	int			y;
+	int			z;
+	char		c;
+	t_fillit	*tmp;
 
 	y = 0;
 	z = read(fd, &c, 1);
 	tmp = list;
+	if (c != '.' && c != '#')
+		error();
 	while (z)
 	{
 		list->s = malloc(sizeof(char *) * 20);
@@ -36,10 +44,8 @@ t_fillit	*stock(int fd, t_fillit *list)
 		if (c == '\n')
 			z = read(fd, &c, 1);
 		y = 0;
-		printf("%s\n", list->s);
 		if (c == '\0')
-			break;
-		
+			break ;
 		if (z != '\0')
 		{
 			list->next = malloc(sizeof(t_fillit));
@@ -51,7 +57,7 @@ t_fillit	*stock(int fd, t_fillit *list)
 	return (list);
 }
 
-int				main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	char		*s;
 	int			fd;
@@ -59,17 +65,15 @@ int				main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		ft_putstr("usage: fillit imput_file\n");
+		ft_putstr("usage: fillit input_file\n");
 		return (0);
 	}
-	fd = open(av[1], O_RDONLY);
+	if (!(fd = open(av[1], O_RDONLY)))
+		error();
 	list = (t_fillit *)malloc(sizeof(t_fillit));
 	list = stock(fd, list);
-	if (!full_check(list))
-	{
-		printf(red"Sombre Merde\n"reset);
-		return (0);
-	}
-	printf(green"GG FDP"reset);
+	if (full_check(list) == 0)
+		error();
+	printf(green"Succesful"reset);
 	return (0);
 }
