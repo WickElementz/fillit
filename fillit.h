@@ -6,7 +6,7 @@
 /*   By: thperchi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/11 19:05:38 by thperchi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/02/18 13:45:00 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/02/26 14:44:14 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,5 +36,6 @@ typedef struct		s_fillit
 int					full_check(t_fillit *list);
 t_fillit			*stock(int fd, t_fillit *list);
 int					num_char(char *str);
+void				error(void);
 
 #endif

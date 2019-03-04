@@ -6,12 +6,25 @@
 /*   By: thperchi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/11 12:47:47 by thperchi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/02/18 14:47:28 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/02/27 20:24:05 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+static int		valid_tetri(int y, char *s, int x)
+{
+	if (s[x + 1] == '#')
+		y++;
+	if (s[x - 1] == '#')
+		y++;
+	if (s[x - 5] == '#')
+		y++;
+	if (s[x + 5] == '#')
+		y++;
+	return (y);
+}
 
 static int		check_s(char *s)
 {
@@ -26,14 +39,7 @@ static int		check_s(char *s)
 	{
 		if (s[x] == '#')
 		{
-			if (s[x + 1] == '#')
-				y++;
-			if (s[x - 1] == '#')
-				y++;
-			if (s[x - 5] == '#')
-				y++;
-			if (s[x + 5] == '#')
-				y++;
+			y = valid_tetri(y, s, x);
 			z++;
 		}
 		if (s[x] != '.' && s[x] != '#' && s[x] != '\n' && s[x] != '\0')
