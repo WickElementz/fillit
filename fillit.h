@@ -6,7 +6,7 @@
 /*   By: thperchi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/11 19:05:38 by thperchi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/02/26 14:44:14 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/12 15:29:51 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,5 +37,7 @@ int					full_check(t_fillit *list);
 t_fillit			*stock(int fd, t_fillit *list);
 int					num_char(char *str);
 void				error(void);
+char				**ft_map(int x, char **map);
+char				**ft_solver(t_fillit *list, char **map, char c);
 
 #endif
