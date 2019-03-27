@@ -6,12 +6,64 @@
 /*   By: thperchi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/11 12:47:47 by thperchi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/12 16:20:29 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 12:22:14 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+t_fillit		*ft_index(t_fillit *list, int i, int y, int x)
+{
+	int			j;
+	int			check;
+	int			ref_y;
+	int			ref_x;
+	t_fillit	*tmp;
+
+	tmp = list;
+	while (list)
+	{
+		check = 1;
+		j = 0;
+		x = 0;
+		y = 0;
+		i = 0;
+		while (list->s[i])
+		{
+			if (list->s[i] == '#')
+			{
+				if (check == 1)
+				{
+					ref_y = y;
+					ref_x = x;
+					check = 0;
+				}
+				else
+				{
+					list->index[j] = y - ref_y;
+					printf(RED"y = %d\n"RESET, list->index[j]);
+					j++;
+					list->index[j] = x - ref_x;
+					printf(GREEN"x = %d\n"RESET, list->index[j]);
+					j++;
+				}
+			}
+			i++;
+			x++;
+			if (list->s[i] == '\n')
+			{
+				x = 0;
+				i++;
+				y++;
+			}
+		}
+		printf("\n");
+		list = list->next;
+	}
+	list = tmp;
+	return (list);
+}
 
 static int		valid_tetri(int y, char *s, int x)
 {
@@ -50,15 +102,16 @@ static int		check_s(char *s)
 	}
 	if ((y == 6 || y == 8) && z == 4 && x == 20)
 		return (1);
-	return (0);;
+	return (0);
 }
 
 int				full_check(t_fillit *list)
 {
-	int		x;
-	char	**map;
+	int			x;
+	char		**map;
 	t_fillit	*tmp;
-	char c;
+	char		c;
+	int			size;
 
 	x = 0;
 	tmp = list;
@@ -70,15 +123,14 @@ int				full_check(t_fillit *list)
 		x++;
 		list = list->next;
 	}
-	map = ft_map(x, map);
+	map = ft_map(x, map, &size);
 	list = tmp;
-	map = ft_solver(list, map, c);
-	x = 0;
-	/*while (map[x])
+	list = ft_index(list, 0, 0, 0);
+	while (ft_solver(list, map, c, size) == 0)
 	{
-		ft_putstr(map[x]);
-		printf("\n");
-		x++;
-	}*/
+		free(map);
+		size++;
+		map = ft_map_upsize(size);
+	}	
 	return (1);
 }

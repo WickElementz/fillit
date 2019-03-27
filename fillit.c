@@ -6,7 +6,7 @@
 /*   By: thperchi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/11 12:44:08 by thperchi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/11 09:52:26 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/19 13:46:02 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 void		error(void)
 {
-	printf(red"error"reset);
+	printf(RED"error"RESET);
 	exit(1);
 }
 
@@ -74,6 +74,6 @@ int			main(int ac, char **av)
 	list = stock(fd, list);
 	if (full_check(list) == 0)
 		error();
-	printf(green"Succesful"reset);
+	printf(GREEN"Succesful"RESET);
 	return (0);
 }

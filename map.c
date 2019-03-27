@@ -6,7 +6,7 @@
 /*   By: jominodi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/26 11:34:49 by jominodi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/12 16:01:20 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 11:47:15 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,20 +24,44 @@ static int	sqrt(int x)
 	return (size);
 }
 
-char		**ft_map(int	x, char **map)
+char		**ft_map_upsize(int size)
+{
+	char	**map;
+	int		i;
+	int		j;
+
+	i = 0;
+	map = (char **)malloc(sizeof(char *) * (size + 1));
+	while (i < size)
+	{
+		j = 0;
+		map[i] = ft_strnew(size);
+		while (j < size)
+		{
+			map[i][j] = '.';
+			j++;
+		}
+		i++;
+	}
+	map[i] = NULL;
+	return (map);
+}
+
+char		**ft_map(int x, char **map, int *size)
 {
 	int		i;
 	int		j;
 	int		k;
 
 	i = 0;
-	j = 0;
 	k = sqrt(x);
-	printf(magenta"Nombre de Tetriminos: %d\nTaille de la map: %d x %d\n"reset, x, k, k);
+	*size = k;
+	printf(MAGENTA"Nombre de Tetriminos: %d\nTaille de la map: %d x %d\n"RESET, x, k, k);
 	printf("\n");
 	map = (char **)malloc(sizeof(char *) * (k + 1));
 	while (i < k)
 	{
+		j = 0;
 		map[i] = ft_strnew(k);
 		while (j < k)
 		{
@@ -45,7 +69,6 @@ char		**ft_map(int	x, char **map)
 			j++;
 		}
 		i++;
-		j = 0;
 	}
 	map[i] = NULL;
 	return (map);

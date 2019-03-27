@@ -6,7 +6,7 @@
 /*   By: thperchi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/11 19:05:38 by thperchi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/12 15:29:51 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 11:39:16 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,25 +19,27 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
-# define red     "\x1b[31m"
-# define green   "\x1b[32m"
-# define yellow  "\x1b[33m"
-# define blue    "\x1b[34m"
-# define magenta "\x1b[35m"
-# define cyan    "\x1b[36m"
-# define reset   "\x1b[0m"
+# define RED     "\x1b[31m"
+# define GREEN   "\x1b[32m"
+# define YELLOW  "\x1b[33m"
+# define BLUE    "\x1b[34m"
+# define MAGENTA "\x1b[35m"
+# define CYAN    "\x1b[36m"
+# define RESET   "\x1b[0m"
 
 typedef struct		s_fillit
 {
 	char			*s;
 	struct s_fillit	*next;
+	int				index[6];
 }					t_fillit;
 
 int					full_check(t_fillit *list);
 t_fillit			*stock(int fd, t_fillit *list);
 int					num_char(char *str);
 void				error(void);
-char				**ft_map(int x, char **map);
-char				**ft_solver(t_fillit *list, char **map, char c);
+char				**ft_map(int x, char **map, int *size);
+int					ft_solver(t_fillit *list, char **map, char c, int size);
+char				**ft_map_upsize(int size);
 
 #endif

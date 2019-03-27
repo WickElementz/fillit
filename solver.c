@@ -6,91 +6,115 @@
 /*   By: jominodi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/26 11:24:57 by jominodi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/12 16:20:31 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/26 11:39:39 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fillit.h"
-/*
-char	**ft_solver(t_fillit *list, char **map, char c, int x)
+
+char	**copy_map(char **map, int size)
 {
-	int	i;
-	int j;
-	int k;
+	char	**c_map;
+	int		i;
 
 	i = 0;
-	j = 0;
-	k = 0;
-	while (i < 18)
+	c_map = (char **)malloc(sizeof(char *) * (size + 1));
+	while (i < size)
 	{
-		if (list->s[i] == '#' && map[j][k] == '.')
-		{
-			map[j][k] = c;
-		}
-		if (map[j][k] == '\0')
-		{
-			j++;
-			k = 0;
-		}
-		if (map[j][k] == '\0')
-			return (ft_solver(list, map, c, x + 1));
+		c_map[i] = ft_strdup(map[i]);
 		i++;
-		k++;
 	}
-	if (list->next)
-		return (ft_solver(list->next, map, c + 1, x));
-	map[j] = NULL;
-	return (map);
+	c_map[i] = NULL;
+	return (c_map);
+
+
+
 }
-*/
-char	**ft_solver(t_fillit *list, char **map, char c)
+
+void	display_map(char **map)
 {
-	int	i;
-	int	j;
-	int	k;
-	int	l;
+	int i;
 
 	i = 0;
-	j = 0;
-	k = 0;
-	l = 0;
-	while (map[j])
-	{
-		j++;
-		l++;
-	}
-	printf(green"%d\n\n%d\n\n"reset, j, l);
-	j = 0;
-	l--;
-	while (l >= 0)
-	{
-		printf("%s\n", map[l]);
-		l--;
-	}
-	while (list->s[i])
-	{
-		dprintf(1, blue"allo"reset);
-		while (list->s[i] == '.' || list->s[i] == '\n')
-			i++;
-		dprintf(1, green"allo"reset);
-		dprintf(1, "%d | %d", j, k);
-		if (list->s[i] == '#' && map[j][k] == '.')
-		{
-			printf(red"allo"reset);
-			map[j][k] = c;
-			k++;
-			i++;
-			if (map[j][k] == '\0')
-			{
-				j++;
-				k = 0;
-			}
-		}
-		if (j == l && k == l)
-			break;
+	while (map[i])
+		ft_putendl(map[i++]);
+	ft_putchar('\n');
+}
 
+void	ft_place_piece(int *tab, char **map, int i, int j, char c)
+{
+	int three;
+	int x;
+	int y;
+
+	x = 1;
+	y = 0;
+	three = 0;
+	map[i][j] = c;
+	while (three++ < 3)
+	{
+		map[i + tab[y]][j + tab[x]] = c;
+		y += 2;
+		x += 2;
 	}
-	map[j] = NULL;
-	return (map);
+}
+
+int		ft_check_position(int *tab, char **map, int i, int j, int size)
+{
+	int x;
+	int y;
+	int three;
+	int	tmp_i;
+	int	tmp_j;
+
+	x = 1;
+	y = 0;
+	three = 0;
+	while (three++ < 3)
+	{
+		tmp_i = i + tab[y];
+		tmp_j = j + tab[x];
+		if (tmp_i < 0 || tmp_i >= size || tmp_j < 0 || tmp_j >= size)
+			return (0);
+		if (map[tmp_i][tmp_j] != '.')
+			return (0);
+		y += 2;
+		x += 2;
+	}
+	return (1);
+}
+
+int		ft_solver(t_fillit *list, char **map, char c, int size)
+{
+	int i;
+	int j;
+	char **c_map;
+
+	i = 0;
+	if (!list)
+	{
+		display_map(map);
+		return(1);
+	}
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j] && list)
+		{
+			if (map[i][j] == '.')
+			{
+				if (ft_check_position(list->index, map, i, j, size))
+				{
+					c_map = copy_map(map, size);	
+					ft_place_piece(list->index, c_map, i, j, c);
+					if (ft_solver(list->next, c_map, c + 1, size))
+						return(1);
+				}
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }
