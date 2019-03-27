@@ -6,7 +6,7 @@
 /*   By: thperchi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/11 12:44:08 by thperchi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/19 13:46:02 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/27 18:06:26 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 void		error(void)
 {
-	printf(RED"error"RESET);
+	ft_putstr("error");
 	exit(1);
 }
 
@@ -33,7 +33,7 @@ t_fillit	*stock(int fd, t_fillit *list)
 		error();
 	while (z)
 	{
-		list->s = malloc(sizeof(char *) * 20);
+		list->s = ft_strnew(20);
 		while (y != 20)
 		{
 			list->s[y] = c;
@@ -74,6 +74,5 @@ int			main(int ac, char **av)
 	list = stock(fd, list);
 	if (full_check(list) == 0)
 		error();
-	printf(GREEN"Succesful"RESET);
 	return (0);
 }

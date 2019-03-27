@@ -6,7 +6,7 @@
 /*   By: jominodi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/26 11:34:49 by jominodi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/25 11:47:15 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/27 17:54:07 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,8 +56,6 @@ char		**ft_map(int x, char **map, int *size)
 	i = 0;
 	k = sqrt(x);
 	*size = k;
-	printf(MAGENTA"Nombre de Tetriminos: %d\nTaille de la map: %d x %d\n"RESET, x, k, k);
-	printf("\n");
 	map = (char **)malloc(sizeof(char *) * (k + 1));
 	while (i < k)
 	{

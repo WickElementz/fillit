@@ -6,7 +6,7 @@
 /*   By: jominodi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/26 11:24:57 by jominodi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/26 11:39:39 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/27 18:01:02 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,9 +27,6 @@ char	**copy_map(char **map, int size)
 	}
 	c_map[i] = NULL;
 	return (c_map);
-
-
-
 }
 
 void	display_map(char **map)
@@ -87,15 +84,15 @@ int		ft_check_position(int *tab, char **map, int i, int j, int size)
 
 int		ft_solver(t_fillit *list, char **map, char c, int size)
 {
-	int i;
-	int j;
-	char **c_map;
+	int		i;
+	int		j;
+	char	**c_map;
 
 	i = 0;
 	if (!list)
 	{
 		display_map(map);
-		return(1);
+		return (1);
 	}
 	while (map[i])
 	{
@@ -106,10 +103,10 @@ int		ft_solver(t_fillit *list, char **map, char c, int size)
 			{
 				if (ft_check_position(list->index, map, i, j, size))
 				{
-					c_map = copy_map(map, size);	
+					c_map = copy_map(map, size);
 					ft_place_piece(list->index, c_map, i, j, c);
 					if (ft_solver(list->next, c_map, c + 1, size))
-						return(1);
+						return (1);
 				}
 			}
 			j++;

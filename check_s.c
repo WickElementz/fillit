@@ -6,7 +6,7 @@
 /*   By: thperchi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/11 12:47:47 by thperchi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/25 12:22:14 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/27 18:06:21 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,10 +42,8 @@ t_fillit		*ft_index(t_fillit *list, int i, int y, int x)
 				else
 				{
 					list->index[j] = y - ref_y;
-					printf(RED"y = %d\n"RESET, list->index[j]);
 					j++;
 					list->index[j] = x - ref_x;
-					printf(GREEN"x = %d\n"RESET, list->index[j]);
 					j++;
 				}
 			}
@@ -58,10 +56,10 @@ t_fillit		*ft_index(t_fillit *list, int i, int y, int x)
 				y++;
 			}
 		}
-		printf("\n");
 		list = list->next;
 	}
 	list = tmp;
+	free(tmp);
 	return (list);
 }
 
@@ -131,6 +129,6 @@ int				full_check(t_fillit *list)
 		free(map);
 		size++;
 		map = ft_map_upsize(size);
-	}	
+	}
 	return (1);
 }
