@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   ft_solver.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jominodi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: thperchi <thperchi@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/01 10:26:26 by jominodi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/01 10:26:31 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 12:30:12 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,89 +29,79 @@ char	**copy_map(char **map, int size)
 	return (c_map);
 }
 
-void	display_map(char **map)
+int		display_map(char **map)
 {
 	int i;
 
 	i = 0;
 	while (map[i])
 		ft_putendl(map[i++]);
-	ft_putchar('\n');
+	return (0);
 }
 
-void	ft_place_piece(int *tab, char **map, int i, int j, char c)
+void	ft_place_piece(int *tab, char **map, t_val *val, char c)
 {
 	int three;
-	int x;
-	int y;
 
-	x = 1;
-	y = 0;
+	val->x = 1;
+	val->y = 0;
 	three = 0;
-	map[i][j] = c;
+	map[val->i][val->j] = c;
 	while (three++ < 3)
 	{
-		map[i + tab[y]][j + tab[x]] = c;
-		y += 2;
-		x += 2;
+		map[val->i + tab[val->y]][val->j + tab[val->x]] = c;
+		val->y += 2;
+		val->x += 2;
 	}
 }
 
-int		ft_check_position(int *tab, char **map, int i, int j, int size)
+int		ft_check_position(int *tab, char **map, t_val *val, int size)
 {
-	int x;
-	int y;
 	int three;
 	int	tmp_i;
 	int	tmp_j;
 
-	x = 1;
-	y = 0;
+	val->x = 0;
+	val->y = 1;
 	three = 0;
 	while (three++ < 3)
 	{
-		tmp_i = i + tab[y];
-		tmp_j = j + tab[x];
+		tmp_i = val->i + tab[val->x];
+		tmp_j = val->j + tab[val->y];
 		if (tmp_i < 0 || tmp_i >= size || tmp_j < 0 || tmp_j >= size)
 			return (0);
 		if (map[tmp_i][tmp_j] != '.')
 			return (0);
-		y += 2;
-		x += 2;
+		val->y += 2;
+		val->x += 2;
 	}
 	return (1);
 }
 
 int		ft_solver(t_fillit *list, char **map, char c, int size)
 {
-	int		i;
-	int		j;
+	t_val	*val;
 	char	**c_map;
 
-	i = 0;
-	if (!list)
-	{
-		display_map(map);
+	val = (t_val *)malloc(sizeof(t_val));
+	val->i = -1;
+	if (!list && display_map(map) == 0)
 		return (1);
-	}
-	while (map[i])
+	while (map[++val->i])
 	{
-		j = 0;
-		while (map[i][j] && list)
+		val->j = 0;
+		while (map[val->i][val->j] && list)
 		{
-			if (map[i][j] == '.')
-			{
-				if (ft_check_position(list->index, map, i, j, size))
+			if (map[val->i][val->j] == '.')
+				if (ft_check_position(list->index, map, val, size))
 				{
 					c_map = copy_map(map, size);
-					ft_place_piece(list->index, c_map, i, j, c);
+					ft_place_piece(list->index, c_map, val, c);
 					if (ft_solver(list->next, c_map, c + 1, size))
 						return (1);
 				}
-			}
-			j++;
+			val->j++;
 		}
-		i++;
 	}
 	return (0);
 }

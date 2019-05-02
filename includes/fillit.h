@@ -6,7 +6,7 @@
 /*   By: thperchi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/11 19:05:38 by thperchi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/01 10:13:40 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 12:31:23 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,9 +34,20 @@ typedef struct		s_fillit
 	int				index[6];
 }					t_fillit;
 
+typedef struct		s_value
+{
+	int				i;
+	int				j;
+	int				x;
+	int				y;
+	int				ref_x;
+	int				ref_y;
+	int				check;
+	int				size;
+	char			c;
+}					t_val;
+
 int					full_check(t_fillit *list);
-t_fillit			*stock(int fd, t_fillit *list);
-int					num_char(char *str);
 void				error(void);
 char				**ft_map(int x, char **map, int *size);
 int					ft_solver(t_fillit *list, char **map, char c, int size);
