@@ -6,7 +6,7 @@
 /*   By: jominodi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/02 12:19:27 by jominodi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 19:27:56 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 11:09:41 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,6 +63,10 @@ int			main(int ac, char **av)
 	list = (t_fillit *)malloc(sizeof(t_fillit));
 	list = stock(fd, list, 0, 0);
 	if (full_check(list) == 0)
+	{
+		free_list(list);
 		error();
+	}
+	free_list(list);
 	return (0);
 }

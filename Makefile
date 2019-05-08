@@ -6,7 +6,7 @@
 #    By: jominodi <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/04/01 10:22:57 by jominodi     #+#   ##    ##    #+#        #
-#    Updated: 2019/04/11 17:49:40 by thperchi    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/05/08 11:19:53 by jominodi    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -23,7 +23,8 @@ LIB_DIR = ./libft/
 SRC_NAME = fillit.c\
 		   ft_solver.c\
 		   ft_check.c\
-		   ft_map.c
+		   ft_map.c\
+		   free.c
 INC_NAME = $(NAME).h
 LIB_NAME = libft.a
 
@@ -33,7 +34,7 @@ OBJ_NAME = $(SRC_NAME:.c=.o)
 	OBJ = $(addprefix $(OBJ_DIR), $(OBJ_NAME))
 	LIB = $(addprefix $(LIB_DIR), $(LIB_NAME))
 
-FLAG = -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra -g
 
 all	: $(NAME)
 

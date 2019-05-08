@@ -6,28 +6,12 @@
 /*   By: thperchi <thperchi@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/01 10:26:26 by jominodi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 12:30:12 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 11:44:40 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../includes/fillit.h"
-
-char	**copy_map(char **map, int size)
-{
-	char	**c_map;
-	int		i;
-
-	i = 0;
-	c_map = (char **)malloc(sizeof(char *) * (size + 1));
-	while (i < size)
-	{
-		c_map[i] = ft_strdup(map[i]);
-		i++;
-	}
-	c_map[i] = NULL;
-	return (c_map);
-}
 
 int		display_map(char **map)
 {
@@ -37,6 +21,23 @@ int		display_map(char **map)
 	while (map[i])
 		ft_putendl(map[i++]);
 	return (0);
+}
+
+char	**copy_map(char **map, int size)
+{
+	char	**c_map;
+	int		i;
+
+	i = 0;
+	if (!(c_map = (char **)malloc(sizeof(char *) * (size + 1))))
+		error();
+	while (i < size)
+	{
+		c_map[i] = ft_strdup(map[i]);
+		i++;
+	}
+	c_map[i] = NULL;
+	return (c_map);
 }
 
 void	ft_place_piece(int *tab, char **map, t_val *val, char c)
@@ -80,28 +81,28 @@ int		ft_check_position(int *tab, char **map, t_val *val, int size)
 
 int		ft_solver(t_fillit *list, char **map, char c, int size)
 {
-	t_val	*val;
+	t_val	val;
 	char	**c_map;
 
-	val = (t_val *)malloc(sizeof(t_val));
-	val->i = -1;
+	val.i = -1;
 	if (!list && display_map(map) == 0)
-		return (1);
-	while (map[++val->i])
+		return (clean(map));
+	while (map[++val.i])
 	{
-		val->j = 0;
-		while (map[val->i][val->j] && list)
+		val.j = 0;
+		while (map[val.i][val.j] && list)
 		{
-			if (map[val->i][val->j] == '.')
-				if (ft_check_position(list->index, map, val, size))
+			if (map[val.i][val.j] == '.')
+				if (ft_check_position(list->index, map, &val, size))
 				{
 					c_map = copy_map(map, size);
-					ft_place_piece(list->index, c_map, val, c);
+					ft_place_piece(list->index, c_map, &val, c);
 					if (ft_solver(list->next, c_map, c + 1, size))
-						return (1);
+						return (clean(map));
 				}
-			val->j++;
+			val.j++;
 		}
 	}
+	free_double_char(map);
 	return (0);
 }

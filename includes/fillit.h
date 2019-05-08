@@ -6,7 +6,7 @@
 /*   By: thperchi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/11 19:05:38 by thperchi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 12:31:23 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 11:33:18 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,5 +52,8 @@ void				error(void);
 char				**ft_map(int x, char **map, int *size);
 int					ft_solver(t_fillit *list, char **map, char c, int size);
 char				**ft_map_upsize(int size);
+t_fillit			*free_list(t_fillit *list);
+void				free_double_char(char **map);
+int					clean(char **map);
 
 #endif

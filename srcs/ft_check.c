@@ -6,7 +6,7 @@
 /*   By: jominodi <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/01 10:26:06 by jominodi     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 19:28:02 by jominodi    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 15:33:25 by jominodi    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,13 +63,16 @@ t_fillit		*ft_index(t_fillit *list, t_val *val)
 
 static int		valid_tetri(int y, char *s, int x)
 {
-	if (s[x + 1] == '#')
+	int	i;
+
+	i = ft_strlen(s);
+	if ((x + 1 <= i) && s[x + 1] == '#')
 		y++;
-	if (s[x - 1] == '#')
+	if (x >= 1 && s[x - 1] == '#')
 		y++;
-	if (s[x - 5] == '#')
+	if (x >= 5 && s[x - 5] == '#')
 		y++;
-	if (s[x + 5] == '#')
+	if ((x + 5 <= i) && s[x + 5] == '#')
 		y++;
 	return (y);
 }
@@ -96,29 +99,25 @@ static int		check_s(char *s, int x, int y, int z)
 
 int				full_check(t_fillit *list)
 {
-	t_val		*val;
+	t_val		val;
 	char		**map;
 	t_fillit	*tmp;
 
-	val = (t_val *)malloc(sizeof(t_val));
-	val->x = 0;
+	val.x = 0;
 	tmp = list;
 	map = NULL;
-	val->c = 'A';
+	val.c = 'A';
 	while (list)
 	{
 		if (!check_s(list->s, 0, 0, 0))
 			return (0);
-		val->x++;
+		val.x++;
 		list = list->next;
 	}
-	map = ft_map(val->x, map, &val->size);
+	map = ft_map(val.x, map, &val.size);
 	list = tmp;
-	list = ft_index(list, val);
-	while (ft_solver(list, map, val->c, val->size) == 0 && val->size++)
-	{
-		free(map);
-		map = ft_map_upsize(val->size);
-	}
+	list = ft_index(list, &val);
+	while (ft_solver(list, map, val.c, val.size) == 0 && val.size++)
+		map = ft_map_upsize(val.size);
 	return (1);
 }
